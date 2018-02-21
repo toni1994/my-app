@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import style from './styles/app.scss';
 import SimpleLineChart from './chart.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {getParameteres} from "./redux/actions/index.js";
 
 const imgTemperature = require('./images/temperature.png');
 const imgHumadity = require('./images/humadity.png');
@@ -9,6 +12,8 @@ const imgPressure = require('./images/pressure.png');
 const imgPeople = require('./images/people.png');
 
 class App extends Component {
+  componentWillMount(){
+    this.props.actions.getParameteres();}
   render() {
     return (
       <div className={style.wrapper}>
@@ -59,4 +64,12 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({
+      getParameteres,
+    }, dispatch),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(App);
