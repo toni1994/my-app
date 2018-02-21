@@ -1,0 +1,174 @@
+html, body, :global(#root) {
+	height: 100%;	
+}
+
+.wrapper{
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	font-family: 'Proxima Nova', sans-serif;
+    font-weight: 400;	
+}
+
+.blockContainer{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 2;
+    flex-wrap: wrap;
+    border-radius: 30px;
+}
+.blockItem{
+    display: flex;
+    flex-direction: row;
+    width: 49.5%;
+    flex: 1 1 auto;
+    background-color: blue;
+}
+
+.blockItem:nth-child(1){
+    border-top-left-radius: 30px;
+    margin-bottom: 1%;
+    margin-right: 1%;
+    background-color: #C4D9AB;
+}
+
+.blockItem:nth-child(2){
+    border-top-right-radius: 30px;
+    margin-bottom: 1%;
+    background-color: #C9DA71;
+}
+
+.blockItem:nth-child(3){
+    border-bottom-left-radius: 30px;
+    margin-right: 1%;
+    background-color: #E6CE2C;
+}
+
+.blockItem:nth-child(4){
+    border-bottom-right-radius: 30px; 
+    background-color: #D97D00; 
+}
+
+
+.chartContainer{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.imgTemperature,.imgLightness{
+    width: 150px;
+    height: 150px;
+    position: relative;
+    margin-top: 50%;
+    margin-left: 5%;
+}
+
+
+.imgHumadity, .imgPressure{
+    width: 150px;
+    height: 150px;
+    margin-top: 50%;
+    margin-right: 5%;
+}
+
+.LeftDescriptionPartOfBlock{
+    width: 60%;
+    display: block;
+    flex: 1 1 auto;
+    color: white;
+    font-size: 20px;
+    margin-left: 5%;
+    position: relative;
+    height: 100%;
+    line-height: 2
+}
+
+.RightDescriptionPartOfBlock{
+    width: 60%;
+    display: block;
+    flex: 1 1 auto;
+    color: white;
+    font-size: 20px;
+    height: 100%;
+    .nameOfParametar{ 
+        float: right;
+        line-height: 2} 
+}
+
+.ImagePartOfBlock{
+    width: 40%;
+    display: block;
+    flex: 1 1 auto;
+}
+
+.nameOfParametar{
+    display: block;
+    padding-bottom: 10px;
+    margin-top: 120px;
+}
+
+.centerItem{
+    background-color: green;
+    margin: 0 auto;
+    height: 120px;
+    width: 150px; 
+    position: relative;
+}
+
+.middleBlock{
+    height: 100%;
+    width: 70%;
+    position: absolute;
+    margin: 0 auto;
+}
+
+.ww{
+    margin: 0 auto;
+    height: 150px;
+    width: 200px;
+    background-color: #EAF1E2;
+    border-radius: 30px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: white;
+    margin-top: 240px
+
+}
+
+.imgPeople{
+    width: 100px;
+    position: absolute;
+    margin-top: -50px;
+    margin-left: 50px;
+}
+
+.conferenceRoom{
+    color: #5E5E60;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 30px;
+    line-height: 1.1
+}
+
+.roomTemperature{
+   
+    flex-grow: 1;
+}
+
+.roomPressure{
+  
+    flex-grow: 1;
+}
+
+.chartDescription{
+    color: #5E5E60;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.chart{
+    color: black;
+    margin-top: 20px;
+}
+
