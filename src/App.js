@@ -12,8 +12,21 @@ const imgPressure = require('./images/pressure.png');
 const imgPeople = require('./images/people.png');
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.myTimeoutFunction=this.myTimeoutFunction.bind(this);
+  }
+
+  myTimeoutFunction()
+  {
+      this.props.actions.getParameteres();
+      setTimeout(this.myTimeoutFunction, 10000);
+  }
+  
+
   componentWillMount(){
-    this.props.actions.getParameteres();}
+    this.props.actions.getParameteres();
+    this.myTimeoutFunction();}
   render() {
     return (
       <div className={style.wrapper}>
@@ -39,7 +52,7 @@ class App extends Component {
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgPressure} src={imgPressure} alt="imgPressure"/> </div>
           </div>
 
-          <div className={style.middleBlock}>  <div className={style.ww}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> XYZ </b> </p>  </div> </div>
+          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> XYZ </b> </p>  </div> </div>
           </div>
         <div className={style.chartContainer}>
             <div className={style.roomTemperature}>
@@ -47,20 +60,26 @@ class App extends Component {
               Room temperature throught the  <br/> day depending on number of <br/> people present
               </div>
               <div className={style.chart}>
-             <SimpleLineChart/>
+             <SimpleLineChart data={this.props.data}/>
              </div>
               </div>
             <div className={style.roomPressure}>
             <div className={style.chartDescription}>
           Room pressure and humidity  <br/> through the day depending on  <br/> number of people present
           <div className={style.chart}>
-          <SimpleLineChart/>
+          <SimpleLineChart data={this.props.data}/>
             </div>
             </div>
             </div>
         </div>
       </div>
     );
+  }
+}
+
+function mapStateToProps(state){
+  return {
+      data: state.parameters.data,
   }
 }
 
@@ -72,4 +91,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

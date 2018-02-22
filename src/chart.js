@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts'
 
-const data = [
-      {name: 'Measure 1', hour: 11, temp: 21, num: 12},
-      {name: 'Measure 2', hour: 12, temp: 23, num: 17},
-      {name: 'Measure 3 ', hour: 15, temp: 17, num: 2},
-      {name: 'Measure 4', hour: 17, temp: 16, num: 2},
-      {name: 'Measure 5', hour: 18, temp: 16, num: 1},
-      {name: 'Measure 6', hour: 19, temp: 20, num: 11},
-      {name: 'Measure 7', hour: 21, temp: 21, num: 14},
-];
 
-const SimpleLineChart = () =>
+const SimpleLineChart = (props) =>
 	 (
-    	<LineChart width={400} height={200} data={data}
+    	<LineChart width={400} height={200} data={props.data}
             margin={{top: 5, right: 30, left: 20, bottom: 5}}>
        <XAxis dataKey="name"/>
        <YAxis/>
