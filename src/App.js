@@ -5,6 +5,8 @@ import SynChart from './synChart.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {getParameteres} from "./redux/actions/index.js";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ButtonInterval from './buttonInterval';
 
 const imgTemperature = require('./images/temperature.png');
 const imgHumadity = require('./images/humadity.png');
@@ -21,7 +23,7 @@ class App extends Component {
   myTimeoutFunction()
   {
       this.props.actions.getParameteres();
-      setTimeout(this.myTimeoutFunction, 10000);
+      setTimeout(this.myTimeoutFunction, 20000);
   }
 
   componentWillMount(){
@@ -29,6 +31,7 @@ class App extends Component {
     this.myTimeoutFunction();}
   render() {
     return (
+      <MuiThemeProvider>
       <div className={style.wrapper}>
         <div className={style.blockContainer}> 
 
@@ -55,6 +58,7 @@ class App extends Component {
           <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> XYZ </b> </p>  </div> </div>
           </div>
         <div className={style.chartContainer}>
+            <ButtonInterval/>
             <div className={style.roomTemperature}>
               <div className={style.chartDescription}>
               Room temperature throught the  <br/> day depending on number of <br/> people present
@@ -73,6 +77,7 @@ class App extends Component {
             </div>            
         </div>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

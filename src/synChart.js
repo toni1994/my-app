@@ -21,7 +21,7 @@ const SynChart = (props) =>
           <CartesianGrid strokeDasharray="3 3"/>
           <Tooltip/>
           <Line type='monotone' dataKey='hour' stroke='#82ca9d' fill='#82ca9d' />
-          <Brush />
+          <Brush dataKey='name' />
         </LineChart>
         </div>
     );
