@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import style from './styles/app.scss';
 import SimpleLineChart from './chart.js';
+import SynChart from './synChart.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {getParameteres} from "./redux/actions/index.js";
@@ -22,7 +23,6 @@ class App extends Component {
       this.props.actions.getParameteres();
       setTimeout(this.myTimeoutFunction, 10000);
   }
-  
 
   componentWillMount(){
     this.props.actions.getParameteres();
@@ -67,10 +67,10 @@ class App extends Component {
             <div className={style.chartDescription}>
           Room pressure and humidity  <br/> through the day depending on  <br/> number of people present
           <div className={style.chart}>
-          <SimpleLineChart data={this.props.data}/>
+          <SynChart data={this.props.data}/>
             </div>
             </div>
-            </div>
+            </div>            
         </div>
       </div>
     );
@@ -90,5 +90,6 @@ function mapDispatchToProps(dispatch) {
     }, dispatch),
   };
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
