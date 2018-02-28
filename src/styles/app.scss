@@ -172,3 +172,26 @@ html, body, :global(#root) {
     margin-top: 20px;
 }
 
+.settingsContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons{
+    margin-left: 100px;
+    display: flex;
+    align-items: center
+}
+
+.buttonStart{
+    font-weight: 500;
+}
+
+
+.buttonReset{
+    margin-left: 30px;
+    margin-left: 20px;
+    font-weight: 500;
+}
+

@@ -4,9 +4,10 @@ import SimpleLineChart from './chart.js';
 import SynChart from './synChart.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {getParameteres} from "./redux/actions/index.js";
+import {getParameteres, changeDataInterval, reset, start_stop} from "./redux/actions/index.js";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ButtonInterval from './buttonInterval';
+import ButtonStart from './buttonStart';
 
 const imgTemperature = require('./images/temperature.png');
 const imgHumadity = require('./images/humadity.png');
@@ -14,21 +15,47 @@ const imgLightness = require('./images/lightness.png');
 const imgPressure = require('./images/pressure.png');
 const imgPeople = require('./images/people.png');
 
+var globalTimer = {};
+
 class App extends Component {
   constructor(props){
     super(props);
     this.myTimeoutFunction=this.myTimeoutFunction.bind(this);
+    this.changeInterval=this.changeInterval.bind(this);
+    this.resetAll=this.resetAll.bind(this);
+    this.changeToStart=this.changeToStart.bind(this);
+    this.changeToStop=this.changeToStop.bind(this);
   }
+
+  changeInterval(newInterval){
+      this.props.actions.changeDataInterval(newInterval);
+  }
+
+  resetAll(){
+    this.props.actions.reset();
+    clearInterval(globalTimer);
+}
+
+  changeToStart(value){
+    this.props.actions.start_stop(value);
+    this.myTimeoutFunction();
+}
+
+  changeToStop(value){
+  this.props.actions.start_stop(value);
+  clearInterval(globalTimer);
+}
 
   myTimeoutFunction()
   {
       this.props.actions.getParameteres();
-      setTimeout(this.myTimeoutFunction, 20000);
-  }
+      globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 5000);
+  }   
 
   componentWillMount(){
-    this.props.actions.getParameteres();
-    this.myTimeoutFunction();}
+    //this.props.actions.getParameteres();
+    //this.myTimeoutFunction();
+  }
   render() {
     return (
       <MuiThemeProvider>
@@ -58,7 +85,7 @@ class App extends Component {
           <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> XYZ </b> </p>  </div> </div>
           </div>
         <div className={style.chartContainer}>
-            <ButtonInterval/>
+            <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
             <div className={style.roomTemperature}>
               <div className={style.chartDescription}>
               Room temperature throught the  <br/> day depending on number of <br/> people present
@@ -85,6 +112,8 @@ class App extends Component {
 function mapStateToProps(state){
   return {
       data: state.parameters.data,
+      dataInterval: state.parameters.dataInterval,
+      start: state.parameters.start
   }
 }
 
@@ -92,6 +121,9 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       getParameteres,
+      changeDataInterval,
+      reset,
+      start_stop
     }, dispatch),
   };
 }

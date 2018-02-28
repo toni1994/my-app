@@ -11,3 +11,17 @@ export const getParametersFailed = () => ({
     type: 'GET_PARAMETERS_FAILED',
   })
   
+export const changeDataInterval = (value) => ({
+  type: 'CHANGE_DATA_INTERVAL',
+  value
+})
+
+export const reset = () => ({
+  type: 'RESET',
+})
+
+export const start_stop = (value) => ({
+  type: 'START_STOP',
+  value
+})
+
