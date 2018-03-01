@@ -8,6 +8,10 @@ import {getParameteres, changeDataInterval, reset, start_stop} from "./redux/act
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ButtonInterval from './buttonInterval';
 import ButtonStart from './buttonStart';
+import anychart from 'anychart';
+import ReactDOM from 'react-dom'
+import AnyChart from 'anychart-react'
+
 
 const imgTemperature = require('./images/temperature.png');
 const imgHumadity = require('./images/humadity.png');
@@ -29,6 +33,7 @@ class App extends Component {
 
   changeInterval(newInterval){
       this.props.actions.changeDataInterval(newInterval);
+      complexSettings.data = [27];
   }
 
   resetAll(){
@@ -64,11 +69,11 @@ class App extends Component {
 
           <div className={style.blockItem}>
             <div className={style.ImgagePartOfBlock}> <img className={style.imgTemperature} src={imgTemperature} alt="imgTemperature"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] °C <br/> UGODNA SOBNA TEMPERATURA </div> </div>  
+            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] °C <br/> UGODNO</div> </div>  
            </div>
 
           <div className={style.blockItem}>
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [HUMIDITY] % <br/>  H ZRAK  </div> </div>  
+            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [VLAŽNOST] % <br/>  H ZRAK  </div> </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgHumadity} src={imgHumadity} alt="imgHumadity"/> </div>
           </div>
 
@@ -84,36 +89,40 @@ class App extends Component {
 
           <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> XYZ </b> </p>  </div> </div>
           </div>
+          <AnyChart
+    {...complexSettings}
+  />
+          <div id="container"> 
+           </div>    
         <div className={style.chartContainer}>
             <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
-            <div className={style.roomTemperature}>
-              <div className={style.chartDescription}>
-              Room temperature throught the  <br/> day depending on number of <br/> people present
-              </div>
-              <div className={style.chart}>
-             <SimpleLineChart data={this.props.data}/>
-             </div>
-              </div>
             <div className={style.roomPressure}>
-            <div className={style.chartDescription}>
-          Room pressure and humidity  <br/> through the day depending on  <br/> number of people present
-          <div className={style.chart}>
+            
+          <div className={style.chart}> 
           <SynChart data={this.props.data}/>
+
             </div>
+         
             </div>
-            </div>            
+                   
         </div>
+     
       </div>
       </MuiThemeProvider>
     );
   }
 }
 
+function newFunction() {
+  return 0;
+}
+
 function mapStateToProps(state){
   return {
       data: state.parameters.data,
       dataInterval: state.parameters.dataInterval,
-      start: state.parameters.start
+      start: state.parameters.start,
+      //oxygen: state.parameters.data[0].temp
   }
 }
 
@@ -128,5 +137,42 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+var legend = {
+  background: 'lightgreen 0.4',
+  padding: 3
+}
+
+var data = [24];
+ 
+  const complexSettings = {
+    width: 120,
+    height: 640,
+    type: 'column',
+    data: data,
+    color: 'black',
+    title: 'Level of Oxygen',
+    yScale: {
+       minimum : 5,
+       maximum: 30,
+    ticks:{
+      interval: 3
+    }},
+    yAxis: [1, {
+      orientation: 'right',
+      enabled: true,
+      labels: {
+        format: '{%Value}{decimalPoint:\\,}',
+        fontColor: 'gray'
+      }
+    }],
+  };
+  
+
+/*<div className={style.roomTemperature}>
+            
+           <div className={style.chart}>
+             <SimpleLineChart data={this.props.data}/>
+             </div>
+            </div>*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
