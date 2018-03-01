@@ -1,4 +1,4 @@
-const initialState = { dataInterval: 2, start: false}
+const initialState = { dataInterval: 2, start: false , data: [], latestMeasurement: {}}
 
 export default function reducer(state = initialState , action){
     switch(action.type)
@@ -14,13 +14,14 @@ export default function reducer(state = initialState , action){
             addLeadingZero(currDate.getMinutes()) + ":" +
             addLeadingZero(currDate.getSeconds());
     console.log(label);
-        return {...state, data: action.values}
+        return {...state, latestMeasurement: action.values, data: [...state.data, action.values
+         ] }
     
     case "CHANGE_DATA_INTERVAL":
         return {...state, dataInterval: action.value}
     
     case "RESET":
-        return {...state, data: [{}], start: false}
+        return {...state, data: [{}], start: false, latestMeasurement: {}}
     
     case "START_STOP":
         return {...state, start: action.value}

@@ -20,7 +20,7 @@ const imgPressure = require('./images/pressure.png');
 const imgPeople = require('./images/people.png');
 
 var globalTimer = {};
-
+var a = [];
 class App extends Component {
   constructor(props){
     super(props);
@@ -29,11 +29,12 @@ class App extends Component {
     this.resetAll=this.resetAll.bind(this);
     this.changeToStart=this.changeToStart.bind(this);
     this.changeToStop=this.changeToStop.bind(this);
+    this.getColor=this.getColor.bind(this);
+    this.getCondition=this.getCondition.bind(this);
   }
 
   changeInterval(newInterval){
       this.props.actions.changeDataInterval(newInterval);
-      complexSettings.data = [27];
   }
 
   resetAll(){
@@ -55,35 +56,159 @@ class App extends Component {
   {
       this.props.actions.getParameteres();
       globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 5000);
-  }   
+  }
+  
+  getColor(type,value){
+  if(value != undefined)
+  {
+      switch(type){
+        case "temperature":{
+          if(value < 15)
+            return 'blue'
+          else if(value >= 15 && value < 18)
+            return '#8080ff'
+          else if(value >= 18 && value < 22 )
+            return '#C4D9AB'
+          else if(value >= 22 && value < 25)
+            return 'orange'
+          else
+            return 'red'
+        }
+        case "humidity":{
+          if(value < 20)
+          return '#994d00'
+        else if(value >= 20 && value < 40)
+          return '#C9DA71'
+        else
+          return '#4d4dff'
+
+        }
+        case "pressure":{
+          if(value < 100)
+          return '#b8b894'
+        else if(value >= 100 && value < 101.4)
+          return '#C4D9AB'
+        else
+          return '#D97D00' 
+
+        }
+        case "iluminance":{
+          if(value < 20)
+          return '#1a1a00'
+        else if(value >= 20 && value < 60)
+          return  '#ffff4d'
+        else if(value >= 60 && value < 90 )
+          return '#E6CE2C'
+        else
+          return '#D97D00' 
+
+        }
+        case "oxygen":{
+          if(value < 15)
+          return '#b3b3ff'
+        else if(value >= 15 && value < 19.5)
+          return '#8080ff'
+        else if(value >= 19.5 && value < 23.5 )
+          return '#3333ff'
+        else
+          return '#00134d'
+
+        }
+        default:
+          return null;
+      }}
+  }
+
+  getCondition(type,value){
+    if(value != undefined)
+    {
+        switch(type){
+          case "temperature":{
+            if(value < 15)
+              return 'HLADN0'
+            else if(value >= 15 && value < 18)
+              return 'PROHLADNO'
+            else if(value >= 18 && value < 22 )
+              return 'UGODNO'
+            else if(value >= 22 && value < 25)
+              return 'TOPLO'
+            else
+              return 'VRUĆE'
+          }
+          case "humidity":{
+            if(value < 20)
+            return 'SUHO'
+          else if(value >= 20 && value < 40)
+            return 'UGODNO'
+          else
+            return 'VLAŽNO'
+  
+          }
+          case "pressure":{
+            if(value < 100)
+            return 'NIZAK TLAK'
+          else if(value >= 100 && value < 101.4)
+            return 'SREDNJI TLAK'
+          else
+            return 'VISOK TLAK' 
+  
+          }
+          case "iluminance":{
+            if(value < 20)
+            return 'JAKO SLABO OSVJETLJENJE'
+          else if(value >= 20 && value < 60)
+            return  'SREDNJE OSVJETLJENJE'
+          else if(value >= 60 && value < 90 )
+            return 'JAKO OSVJETLJENJE'
+          else
+            return 'PREJAKO OSVJETLJENJE' 
+  
+          }
+          case "oxygen":{
+            if(value < 15)
+            return 'NEDOSTATAK KISIKA'
+          else if(value >= 15 && value < 19.5)
+            return 'SMANJENA ZASIĆENOST'
+          else if(value >= 19.5 && value < 23.5 )
+            return 'OPTIMALNA KOLIČINA'
+          else
+            return 'PREZASIĆENOST KISIKOM'
+  
+          }
+          default:
+            return null;
+        }}
+    }
 
   componentWillMount(){
     //this.props.actions.getParameteres();
     //this.myTimeoutFunction();
   }
   render() {
+    if(this.props.latestMeasurement.oxygen != undefined)
+      complexSettings.data = [this.props.latestMeasurement.oxygen]
     return (
       <MuiThemeProvider>
       <div className={style.wrapper}>
         <div className={style.blockContainer}> 
 
-          <div className={style.blockItem}>
+          <div className={style.blockItem} style={{backgroundColor : this.getColor("temperature",this.props.latestMeasurement.temperature)}}>
             <div className={style.ImgagePartOfBlock}> <img className={style.imgTemperature} src={imgTemperature} alt="imgTemperature"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] °C <br/> UGODNO</div> </div>  
+            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
            </div>
-
-          <div className={style.blockItem}>
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [VLAŽNOST] % <br/>  H ZRAK  </div> </div>  
+          
+          <div className={style.blockItem} style={{backgroundColor : this.getColor("humidity",this.props.latestMeasurement.humidity)}}>
+            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [VLAŽNOST] <br/> {this.props.latestMeasurement.humidity}  % <br/>  {this.getCondition("humidity",this.props.latestMeasurement.humidity)}  </div> </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgHumadity} src={imgHumadity} alt="imgHumadity"/> </div>
           </div>
 
-          <div className={style.blockItem}>
+          <div className={style.blockItem} style={{backgroundColor : this.getColor("iluminance",this.props.latestMeasurement.iluminance)}}>
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgLightness} src={imgLightness} alt="imgLightness"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [OSVJETLJENJE U PROSTORIJI] Lux <br/> JAKO OSVJETLJENJE  </div> </div>  
+            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [OSVJETLJENJE U PROSTORIJI] {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
           </div>
 
-          <div className={style.blockItem}>
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TLAK] Pa <br/>  VISOKI TLAK  </div>  </div>  
+          <div className={style.blockItem} style={{backgroundColor : this.getColor("pressure",this.props.latestMeasurement.pressure)}}>
+            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TLAK] <br/> {this.props.latestMeasurement.pressure} KPa <br/>  {this.getCondition("pressure",this.props.latestMeasurement.pressure)}  </div>  </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgPressure} src={imgPressure} alt="imgPressure"/> </div>
           </div>
 
@@ -92,17 +217,16 @@ class App extends Component {
           <AnyChart
     {...complexSettings}
   />
-          <div id="container"> 
-           </div>    
         <div className={style.chartContainer}>
             <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
             <div className={style.roomPressure}>
             
           <div className={style.chart}> 
+           {}
           <SynChart data={this.props.data}/>
 
             </div>
-         
+            
             </div>
                    
         </div>
@@ -113,16 +237,12 @@ class App extends Component {
   }
 }
 
-function newFunction() {
-  return 0;
-}
-
 function mapStateToProps(state){
   return {
       data: state.parameters.data,
       dataInterval: state.parameters.dataInterval,
       start: state.parameters.start,
-      //oxygen: state.parameters.data[0].temp
+      latestMeasurement: state.parameters.latestMeasurement,
   }
 }
 
@@ -137,20 +257,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-var legend = {
-  background: 'lightgreen 0.4',
-  padding: 3
-}
 
-var data = [24];
- 
-  const complexSettings = {
+
+const complexSettings = {
     width: 120,
     height: 640,
     type: 'column',
-    data: data,
-    color: 'black',
+    data: [5] , 
     title: 'Level of Oxygen',
+    fontColor: '#FF5959',
+    color: 'red',
     yScale: {
        minimum : 5,
        maximum: 30,
@@ -162,17 +278,11 @@ var data = [24];
       enabled: true,
       labels: {
         format: '{%Value}{decimalPoint:\\,}',
-        fontColor: 'gray'
+        fontColor: 'gray',
       }
     }],
   };
   
 
-/*<div className={style.roomTemperature}>
-            
-           <div className={style.chart}>
-             <SimpleLineChart data={this.props.data}/>
-             </div>
-            </div>*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

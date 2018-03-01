@@ -1,16 +1,6 @@
 {
-  "data": [
-      {"name": "11:00", "hour": 11, "temp": 21, "num": 12},
-      {"name": "11:01", "hour": 12, "temp": 23, "num": 17},
-      {"name": "11:02 ", "hour": 15, "temp": 17, "num": 2},
-      {"name": "11:03", "hour": 17, "temp": 16, "num": 2},
-      {"name": "11:04", "hour": 18, "temp": 16, "num": 1},
-      {"name": "11:05", "hour": 12, "temp": 12, "num": 12},
-      {"name": "11:06", "hour": 21, "temp": 22, "num": 22},
-      {"name": "11:07", "hour": 17, "temp": 16, "num": 2},
-      {"name": "11:08 ", "hour": 15, "temp": 17, "num": 2},
-      {"name": "11:09 ", "hour": 15, "temp": 17, "num": 2},
-      {"name": "11:10 ", "hour": 17, "temp": 18, "num": 3},
-      {"name": "11:11 ", "hour": 17, "temp": 18, "num": 3}
-  ]
+  "data": 
+  {"time": "11:05", "temperature": 12, "humidity": 25, "oxygen": 12, "iluminance": 77, "pressure": 101.3, "number of people": 12}
+     
+  
 }
