@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import style from './styles/app.scss';
-import SimpleLineChart from './chart.js';
 import SynChart from './synChart.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -8,10 +7,8 @@ import {getParameteres, changeDataInterval, reset, start_stop} from "./redux/act
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ButtonInterval from './buttonInterval';
 import ButtonStart from './buttonStart';
-import anychart from 'anychart';
-import ReactDOM from 'react-dom'
-import AnyChart from 'anychart-react'
 
+import AnyChart from 'anychart-react'
 
 const imgTemperature = require('./images/temperature.png');
 const imgHumadity = require('./images/humadity.png');
@@ -20,7 +17,7 @@ const imgPressure = require('./images/pressure.png');
 const imgPeople = require('./images/people.png');
 
 var globalTimer = {};
-var a = [];
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -55,11 +52,11 @@ class App extends Component {
   myTimeoutFunction()
   {
       this.props.actions.getParameteres();
-      globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 5000);
+      globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 10000);
   }
   
   getColor(type,value){
-  if(value != undefined)
+  if(value !== undefined)
   {
       switch(type){
         case "temperature":{
@@ -120,12 +117,12 @@ class App extends Component {
   }
 
   getCondition(type,value){
-    if(value != undefined)
+    if(value !== undefined)
     {
         switch(type){
           case "temperature":{
             if(value < 15)
-              return 'HLADN0'
+              return 'HLADNO'
             else if(value >= 15 && value < 18)
               return 'PROHLADNO'
             else if(value >= 18 && value < 22 )
@@ -166,13 +163,13 @@ class App extends Component {
           }
           case "oxygen":{
             if(value < 15)
-            return 'NEDOSTATAK KISIKA'
+            return 'Nedostatak kisika'
           else if(value >= 15 && value < 19.5)
-            return 'SMANJENA ZASIĆENOST'
+            return 'Smanjena zasićenost'
           else if(value >= 19.5 && value < 23.5 )
-            return 'OPTIMALNA KOLIČINA'
+            return 'Optimana količina'
           else
-            return 'PREZASIĆENOST KISIKOM'
+            return 'Zasićenost kisikom'
   
           }
           default:
@@ -185,8 +182,12 @@ class App extends Component {
     //this.myTimeoutFunction();
   }
   render() {
-    if(this.props.latestMeasurement.oxygen != undefined)
-      complexSettings.data = [this.props.latestMeasurement.oxygen]
+    if(this.props.latestMeasurement.oxygen !== undefined){
+      complexSettings.data = "Oxygen," + this.props.latestMeasurement.oxygen
+      complexSettings.title = this.getCondition("oxygen",this.props.latestMeasurement.oxygen)
+    }   
+    else
+      complexSettings.data = [5]
     return (
       <MuiThemeProvider>
       <div className={style.wrapper}>
@@ -212,25 +213,19 @@ class App extends Component {
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgPressure} src={imgPressure} alt="imgPressure"/> </div>
           </div>
 
-          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> XYZ </b> </p>  </div> </div>
+          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
           </div>
-          <AnyChart
-    {...complexSettings}
-  />
-        <div className={style.chartContainer}>
+          <AnyChart {...complexSettings}/>
+          <div className={style.chartContainer}>
             <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
             <div className={style.roomPressure}>
-            
           <div className={style.chart}> 
-           {}
-          <SynChart data={this.props.data}/>
-
-            </div>
-            
-            </div>
-                   
-        </div>
-     
+          <SynChart data={this.props.data} temperatureColor={this.getColor("temperature",this.props.latestMeasurement.temperature)}
+          humidityColor={this.getColor("humidity",this.props.latestMeasurement.humidity)} iluminanceColor={this.getColor("iluminance",this.props.latestMeasurement.iluminance)}
+          pressureColor= {this.getColor("pressure",this.props.latestMeasurement.pressure)} />
+          </div>
+            </div>           
+          </div>
       </div>
       </MuiThemeProvider>
     );
@@ -265,8 +260,6 @@ const complexSettings = {
     type: 'column',
     data: [5] , 
     title: 'Level of Oxygen',
-    fontColor: '#FF5959',
-    color: 'red',
     yScale: {
        minimum : 5,
        maximum: 30,
@@ -281,6 +274,10 @@ const complexSettings = {
         fontColor: 'gray',
       }
     }],
+    lineMarker: {
+      value: 15,
+      colors: 'red'
+    }
   };
   
 

@@ -21,7 +21,7 @@ export default function reducer(state = initialState , action){
         return {...state, dataInterval: action.value}
     
     case "RESET":
-        return {...state, data: [{}], start: false, latestMeasurement: {}}
+        return {...state, data: [], start: false, latestMeasurement: {}}
     
     case "START_STOP":
         return {...state, start: action.value}
