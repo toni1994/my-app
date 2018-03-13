@@ -191,8 +191,8 @@ class App extends Component {
     return (
       <MuiThemeProvider>
       <div className={style.wrapper}>
+        <div className={style.leftContainer}>
         <div className={style.blockContainer}> 
-
           <div className={style.blockItem} style={{backgroundColor : this.getColor("temperature",this.props.latestMeasurement.temperature)}}>
             <div className={style.ImgagePartOfBlock}> <img className={style.imgTemperature} src={imgTemperature} alt="imgTemperature"/> </div>
             <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
@@ -214,8 +214,9 @@ class App extends Component {
           </div>
 
           <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
-          </div>
-          <AnyChart {...complexSettings}/>
+          </div> </div>
+          <div className={style.middleContainer}> <AnyChart {...complexSettings}/> </div>
+          <div className={style.rightContainer}>
           <div className={style.chartContainer}>
             <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
             <div className={style.roomPressure}>
@@ -225,6 +226,7 @@ class App extends Component {
           pressureColor= {this.getColor("pressure",this.props.latestMeasurement.pressure)} />
           </div>
             </div>           
+          </div>
           </div>
       </div>
       </MuiThemeProvider>
@@ -255,7 +257,7 @@ function mapDispatchToProps(dispatch) {
 
 
 const complexSettings = {
-    width: 120,
+    width: 110,
     height: 640,
     type: 'column',
     data: [5] , 
