@@ -162,14 +162,18 @@ class App extends Component {
   
           }
           case "oxygen":{
-            if(value < 15)
-            return 'Nedostatak kisika'
-          else if(value >= 15 && value < 19.5)
-            return 'Smanjena zasićenost'
-          else if(value >= 19.5 && value < 23.5 )
-            return 'Optimana količina'
+            if(value < 10)
+            return 'Kritično niska razina kisika u zraku'
+          else if(value >= 10 && value < 12)
+            return 'Alarmantna razina kisika u zraku'
+          else if(value >= 12 && value < 15)
+            return 'Vrlo niska razina kisika u zraku'
+          else if(value >= 15 && value < 19)
+            return 'Niska razina kisika u zraku'
+          else if(value >= 19 && value < 21 )
+            return 'Blago snižena razina kisika u zraku'
           else
-            return 'Zasićenost kisikom'
+            return 'Normalna razina kisika u zraku'
   
           }
           default:
@@ -193,27 +197,27 @@ class App extends Component {
       <div className={style.wrapper}>
         <div className={style.leftContainer}>
         <div className={style.blockContainer}> 
-          <div className={style.blockItem} style={{backgroundColor : this.getColor("temperature",this.props.latestMeasurement.temperature)}}>
+          <div className={style.blockItem} >
             <div className={style.ImgagePartOfBlock}> <img className={style.imgTemperature} src={imgTemperature} alt="imgTemperature"/> </div>
             <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
            </div>
           
-          <div className={style.blockItem} style={{backgroundColor : this.getColor("humidity",this.props.latestMeasurement.humidity)}}>
+          <div className={style.blockItem} >
             <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [VLAŽNOST] <br/> {this.props.latestMeasurement.humidity}  % <br/>  {this.getCondition("humidity",this.props.latestMeasurement.humidity)}  </div> </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgHumadity} src={imgHumadity} alt="imgHumadity"/> </div>
           </div>
 
-          <div className={style.blockItem} style={{backgroundColor : this.getColor("iluminance",this.props.latestMeasurement.iluminance)}}>
+          <div className={style.blockItem} >
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgLightness} src={imgLightness} alt="imgLightness"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [OSVJETLJENJE U PROSTORIJI] {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
+            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [OSVJETLJENJE U PROSTORIJI] <br/> {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
           </div>
 
-          <div className={style.blockItem} style={{backgroundColor : this.getColor("pressure",this.props.latestMeasurement.pressure)}}>
+          <div className={style.blockItem} >
             <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TLAK] <br/> {this.props.latestMeasurement.pressure} KPa <br/>  {this.getCondition("pressure",this.props.latestMeasurement.pressure)}  </div>  </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgPressure} src={imgPressure} alt="imgPressure"/> </div>
           </div>
 
-          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room <br/> <br/>  <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
+          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room </p> <p  className={style.numberOfPeopleDisplayed}> <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
           </div> </div>
           <div className={style.middleContainer}> <AnyChart {...complexSettings}/> </div>
           <div className={style.rightContainer}>
@@ -221,7 +225,7 @@ class App extends Component {
             <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
             <div className={style.roomPressure}>
           <div className={style.chart}> 
-          <SynChart data={this.props.data} temperatureColor={this.getColor("temperature",this.props.latestMeasurement.temperature)}
+          <SynChart data={this.props.data} excistData={this.props.data.length > 0 ? true : false} temperatureColor={this.getColor("temperature",this.props.latestMeasurement.temperature)}
           humidityColor={this.getColor("humidity",this.props.latestMeasurement.humidity)} iluminanceColor={this.getColor("iluminance",this.props.latestMeasurement.iluminance)}
           pressureColor= {this.getColor("pressure",this.props.latestMeasurement.pressure)} />
           </div>
@@ -257,8 +261,8 @@ function mapDispatchToProps(dispatch) {
 
 
 const complexSettings = {
-    width: 110,
-    height: 640,
+    width: 118,
+    height: 645,
     type: 'column',
     data: [5] , 
     title: 'Level of Oxygen',
@@ -277,7 +281,7 @@ const complexSettings = {
       }
     }],
     lineMarker: {
-      value: 15,
+      value: 19,
       colors: 'red'
     }
   };
