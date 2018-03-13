@@ -1,15 +1,24 @@
+import { SSL_OP_NETSCAPE_CHALLENGE_BUG } from "constants";
+
 //import { camelizeKeys, decamelizeKeys } from 'hump';
 // import fetch from 'isomorphic-fetch';
 //import qs from 'qs';
 
 //const KEY = 'aee9661b86bf453b87fef9bec68f41e8';
-const API_URL = 'http://localhost:3000';
+let API_URL = 'http://192.168.1.104:3000';
 
-export default function callApi(endpoint, body, method,) {
+export default function callApi(endpoint, body, method, header) {
 
-  const headers = new Headers();
+  let headers = new Headers();
   let bodyData = body;
   let queryParams = '';
+  if(header !== null){
+  API_URL = 'https://eappiot-api.sensbysigma.com'
+  headers= {
+    'Cache-control': 'no-cache',
+    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVzIjoiMjAyMC0wNC0wNlQwOToxODo1NC45NTUrMDA6MDAiLCJleHAiOjE1ODYxNjQ3MzQsIm5iZiI6LTYyMTM1NTk2ODAwLCJpYXQiOi02MjEzNTU5NjgwMCwibmFtZSI6IkxvbmdLZXkiLCJ0b2tlblR5cGUiOiJhY2Nlc3NUb2tlbiIsImlzc3VlZCI6IjAwMDEtMDEtMDFUMDA6MDA6MDArMDA6MDAiLCJ1c2VySWQiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ==.DDSXp5IrSjpivn8ya0iwQapPnDXlKRESGvLhDQbXrGA=',
+    'X-DeviceNetwork': 'b6a81728-a517-4a16-bd7f-b1bf6d6f8fb1'
+  }}
 
 
   const URL = `${API_URL}/${endpoint}${queryParams}`;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import style from './styles/app.scss';
+import style from './index.scss';
 import SynChart from './synChart.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

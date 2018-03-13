@@ -13,6 +13,14 @@ export function* loadParameters() {
         yield put(actions.getParametersFailed());
     }
 
+    /*try {
+        const res = yield call(api.getInfoAboutServer);
+        console.log(res)
+    }
+    catch(e) {
+        yield put(actions.getParametersFailed());
+    }*/
+
 }
 
 export function* watchGetParameters() {

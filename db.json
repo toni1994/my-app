@@ -1,6 +1,6 @@
 {
   "data": 
-  {"time": "11:11 ", "temperature": 16, "humidity": 5, "oxygen": 26, "iluminance": 50, "pressure": 101.7,  "numberOfPeople": 23}
+  {"time": "11:11 ", "temperature": 29, "humidity": 5, "oxygen": 20, "iluminance": 88, "pressure": 101.7,  "numberOfPeople":2}
      
   
 }

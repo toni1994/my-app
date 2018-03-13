@@ -1,6 +1,6 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import styles from './styles/app.scss';
+import styles from './index.scss';
 
 export default class ButtonStart extends React.Component {
   render() {
