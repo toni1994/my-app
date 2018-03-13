@@ -6,7 +6,7 @@ const SynChart = (props) =>
 	 (
         <div>      
         <LineChart width={530} height={180} data={props.data} syncId="anyId"
-              margin={{top: 10, right: 15, left: 5, bottom: 0}}>
+              margin={{top: 10, right: 15, left: 5, bottom: 0}} color='black'>
         <Legend verticalAlign="top" wrapperStyle={{lineHeight: '20px'}} />
         <XAxis dataKey="time"/>
         <YAxis/>
