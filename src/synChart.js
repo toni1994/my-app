@@ -41,7 +41,7 @@ const SynChart = (props) =>
         <Brush dataKey='time' />
         <Legend verticalAlign="top" iconType={"square"} iconSize={10} wrapperStyle={{lineHeight: '20px'}} /> 
         </LineChart>
-        </div> : null } </div>  
+        </div> : <div style = {{width: '530px'}}> </div> } </div>  
     );
 
 export default SynChart;

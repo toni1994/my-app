@@ -36,6 +36,7 @@ class App extends Component {
 
   resetAll(){
     this.props.actions.reset();
+    complexSettings.title = "Razina kisika u zraku"
     clearInterval(globalTimer);
 }
 
@@ -262,10 +263,10 @@ function mapDispatchToProps(dispatch) {
 
 const complexSettings = {
     width: 118,
-    height: 645,
+    height: 640,
     type: 'column',
     data: [5] , 
-    title: 'Level of Oxygen',
+    title: 'Razina kisika u zraku',
     yScale: {
        minimum : 5,
        maximum: 30,
