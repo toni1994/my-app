@@ -27,12 +27,14 @@ export default class ButtonInterval extends React.Component {
           onChange={this.handleChange}
           style={styles.customWidth}
           autoWidth={false}
+          labelStyle={{'color':'white'}}
+          selectedMenuItemStyle= {{'color':'blue'}}
         >
-          <MenuItem value={1} primaryText="30 seconds" />
-          <MenuItem value={2} primaryText="1 minutes" />
-          <MenuItem value={4} primaryText="2 minutes" />
-          <MenuItem value={10} primaryText="5 minutes" />
-          <MenuItem value={20} primaryText="10 minutes" />
+          <MenuItem value={1} primaryText="30 seconds"/>
+          <MenuItem value={2} primaryText="1 minutes"/>
+          <MenuItem value={4} primaryText="2 minutes"/>
+          <MenuItem value={10} primaryText="5 minutes"/>
+          <MenuItem value={20} primaryText="10 minutes"/>
         </DropDownMenu>
       </div>
     );

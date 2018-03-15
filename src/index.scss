@@ -1,5 +1,6 @@
 html, body, :global(#root) {
     margin: 5px;
+    background-color: black;
 }
 
 .wrapper{
@@ -16,6 +17,7 @@ html, body, :global(#root) {
     width: 600px;
     flex-wrap: wrap;
     border-radius: 30px;
+    background-color: white;
 }
 .blockItem{
     display: flex;
@@ -52,6 +54,7 @@ html, body, :global(#root) {
 
 
 .chartContainer{
+    background-color: black;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -169,7 +172,7 @@ html, body, :global(#root) {
 }
 
 .chart{
-    color: black;
+    color: white;
 }
 
 .settingsContainer{

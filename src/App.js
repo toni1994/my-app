@@ -264,6 +264,7 @@ function mapDispatchToProps(dispatch) {
 const complexSettings = {
     width: 118,
     height: 640,
+    background: 'black',
     type: 'column',
     data: [5] , 
     title: 'Razina kisika u zraku',
@@ -283,7 +284,7 @@ const complexSettings = {
     }],
     lineMarker: {
       value: 19,
-      colors: 'red'
+      colors: 'blue'
     }
   };
   
