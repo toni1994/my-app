@@ -36,7 +36,7 @@ class App extends Component {
 
   resetAll(){
     this.props.actions.reset();
-    complexSettings.title = "Razina kisika u zraku"
+    complexSettings.title = "Oxygen level in the air"
     clearInterval(globalTimer);
 }
 
@@ -53,7 +53,7 @@ class App extends Component {
   myTimeoutFunction()
   {
       this.props.actions.getParameteres();
-      globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 10000);
+      globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 30000);
   }
   
   getColor(type,value){
@@ -120,66 +120,66 @@ class App extends Component {
   getCondition(type,value){
     if(value !== undefined)
     {
-        switch(type){
-          case "temperature":{
-            if(value < 15)
-              return 'HLADNO'
-            else if(value >= 15 && value < 18)
-              return 'PROHLADNO'
-            else if(value >= 18 && value < 22 )
-              return 'UGODNO'
-            else if(value >= 22 && value < 25)
-              return 'TOPLO'
-            else
-              return 'VRUĆE'
-          }
-          case "humidity":{
-            if(value < 20)
-            return 'SUHO'
-          else if(value >= 20 && value < 40)
-            return 'UGODNO'
+      switch(type){
+        case "temperature":{
+          if(value < 15)
+            return 'VERY COLD'
+          else if(value >= 15 && value < 18)
+            return 'COLD'
+          else if(value >= 18 && value < 22 )
+            return 'IDEAL'
+          else if(value >= 22 && value < 25)
+            return 'WARM'
           else
-            return 'VLAŽNO'
-  
-          }
-          case "pressure":{
-            if(value < 100)
-            return 'NIZAK TLAK'
-          else if(value >= 100 && value < 101.4)
-            return 'SREDNJI TLAK'
-          else
-            return 'VISOK TLAK' 
-  
-          }
-          case "iluminance":{
-            if(value < 20)
-            return 'JAKO SLABO OSVJETLJENJE'
-          else if(value >= 20 && value < 60)
-            return  'SREDNJE OSVJETLJENJE'
-          else if(value >= 60 && value < 90 )
-            return 'JAKO OSVJETLJENJE'
-          else
-            return 'PREJAKO OSVJETLJENJE' 
-  
-          }
-          case "oxygen":{
-            if(value < 10)
-            return 'Kritično niska razina kisika u zraku'
-          else if(value >= 10 && value < 12)
-            return 'Alarmantna razina kisika u zraku'
-          else if(value >= 12 && value < 15)
-            return 'Vrlo niska razina kisika u zraku'
-          else if(value >= 15 && value < 19)
-            return 'Niska razina kisika u zraku'
-          else if(value >= 19 && value < 21 )
-            return 'Blago snižena razina kisika u zraku'
-          else
-            return 'Normalna razina kisika u zraku'
-  
-          }
-          default:
-            return null;
-        }}
+            return 'HOT'
+        }
+        case "humidity":{
+          if(value < 25)
+          return 'DRY'
+        else if(value >= 25 && value < 60)
+          return 'IDEAL'
+        else
+          return 'HUMID'
+
+        }
+        case "pressure":{
+          if(value < 1000)
+          return 'LOW'
+        else if(value >= 1000 && value < 1014)
+          return 'MID'
+        else
+          return 'HIGH' 
+
+        }
+        case "iluminance":{
+          if(value < 500)
+          return 'LOW LIGHT LEVEL'
+        else if(value >= 500 && value < 800)
+          return  'NORMAL LIGHT LEVEL'
+        else if(value >= 800 && value < 1000 )
+          return 'BRIGHT LIGHT LEVEL'
+        else
+          return 'VERY BRIGHT LIGHT LEVEL' 
+
+        }
+        case "oxygen":{
+          if(value < 10)
+          return 'Criticaly low oxygen level'
+        else if(value >= 10 && value < 12)
+          return 'Alarming low oxygen level'
+        else if(value >= 12 && value < 15)
+          return 'Very low oxygen level'
+        else if(value >= 15 && value < 19)
+          return 'Low oxygen level'
+        else if(value >= 19 && value < 21 )
+          return 'Slightly lower oxygen level'
+        else
+          return 'Normal oxygen level'
+
+        }
+        default:
+          return null;
+ }}
     }
 
   componentWillMount(){
@@ -200,25 +200,25 @@ class App extends Component {
         <div className={style.blockContainer}> 
           <div className={style.blockItem} >
             <div className={style.ImgagePartOfBlock}> <img className={style.imgTemperature} src={imgTemperature} alt="imgTemperature"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURA] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
+            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURE] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
            </div>
           
           <div className={style.blockItem} >
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [VLAŽNOST] <br/> {this.props.latestMeasurement.humidity}  % <br/>  {this.getCondition("humidity",this.props.latestMeasurement.humidity)}  </div> </div>  
+            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [HUMIDITY] <br/> {this.props.latestMeasurement.humidity}  % <br/>  {this.getCondition("humidity",this.props.latestMeasurement.humidity)}  </div> </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgHumadity} src={imgHumadity} alt="imgHumadity"/> </div>
           </div>
 
           <div className={style.blockItem} >
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgLightness} src={imgLightness} alt="imgLightness"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [OSVJETLJENJE U PROSTORIJI] <br/> {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
+            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [ILLUMINATION] <br/> {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
           </div>
 
           <div className={style.blockItem} >
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TLAK] <br/> {this.props.latestMeasurement.pressure} KPa <br/>  {this.getCondition("pressure",this.props.latestMeasurement.pressure)}  </div>  </div>  
+            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [PRESSURE] <br/> {this.props.latestMeasurement.pressure} HPa <br/>  {this.getCondition("pressure",this.props.latestMeasurement.pressure)}  </div>  </div>  
             <div className={style.ImgagePartOfBlock}>  <img className={style.imgPressure} src={imgPressure} alt="imgPressure"/> </div>
           </div>
 
-          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the <br/> conference room </p> <p  className={style.numberOfPeopleDisplayed}> <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
+          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the room </p> <p  className={style.numberOfPeopleDisplayed}> <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
           </div> </div>
           <div className={style.middleContainer}> <AnyChart {...complexSettings}/> </div>
           <div className={style.rightContainer}>
@@ -267,7 +267,7 @@ const complexSettings = {
     background: 'black',
     type: 'column',
     data: [5] , 
-    title: 'Razina kisika u zraku',
+    title: 'Oxygen level in the air',
     yScale: {
        minimum : 5,
        maximum: 30,

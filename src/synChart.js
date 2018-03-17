@@ -13,19 +13,19 @@ const SynChart = (props) =>
         <XAxis dataKey="time"/>
         <YAxis/>
         <CartesianGrid  horizontal={false} vertical={false}/> 
-        <CartesianGrid strokeDasharray="4 4"/>
+        <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip wrapperStyle={{backgroundColor: '#9F9F9F', color:'white'}}/>
-        <Line type='monotone' dataKey='temperature' stroke="blue" fill="blue" />
-        <Line type='monotone' dataKey='humidity' stroke='white' fill='white' />   
-        <Line type='monotone' dataKey='oxygen' stroke='#D5D4D4' fill='#D5D4D4' />     
+        <Line type='monotone' dataKey='temperature' stroke="blue" dot={false} fill="blue" />
+        <Line type='monotone' dataKey='humidity' stroke='white' dot={false}   fill='white' />   
+        <Line type='monotone' dataKey='oxygen' stroke='#BABABA' dot={false} fill='#D5D4D4' />     
         </LineChart>
         <LineChart width={530} height={180} data={props.data} syncId="anyId"
               margin={{top: 10, right: 15, left: 5, bottom: 0}}>
         <XAxis dataKey="time"/>
         <YAxis/>
         <CartesianGrid  horizontal={false} vertical={false}/> 
-        <CartesianGrid strokeDasharray="4 4"/>   
-        <Line type='monotone' dataKey='numberOfPeople' stroke='white' fill='white' />
+        <CartesianGrid strokeDasharray="3 3"/>   
+        <Line type='monotone' dataKey='numberOfPeople' stroke='white' dot={false} fill='white' />
         <Tooltip wrapperStyle={{backgroundColor: '#9F9F9F', color:'white'}}/>
         <Legend verticalAlign="top" iconType={"square"} iconSize={10} wrapperStyle={{lineHeight: '20px'}} />
         </LineChart>
@@ -36,8 +36,8 @@ const SynChart = (props) =>
         <CartesianGrid  horizontal={false} vertical={false}/> 
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip wrapperStyle={{backgroundColor: '#9F9F9F', color:'white'}}/>
-        <Line type='monotone' dataKey='pressure' stroke='white' fill='white' />
-        <Line type='monotone' dataKey='iluminance' stroke="#D5D4D4" fill="#D5D4D4" />
+        <Line type='monotone' dataKey='pressure' stroke='white' dot={false} fill='white' />
+        <Line type='monotone' dataKey='iluminance' stroke="blue" dot={false} fill="blue" />
         <Brush dataKey='time' />
         <Legend verticalAlign="top" iconType={"square"} iconSize={10} wrapperStyle={{lineHeight: '20px'}} /> 
         </LineChart>
