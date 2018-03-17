@@ -6,6 +6,8 @@ export default function reducer(state = initialState , action){
     case "GET_PARAMETERS":
         return {...state}
     case  "GET_PARAMETERS_SUCCESS":
+        if(action.values.time === state.latestMeasurement.time)
+            return {...state}
         return {...state, latestMeasurement: action.values, data: [...state.data, action.values
          ] }
     

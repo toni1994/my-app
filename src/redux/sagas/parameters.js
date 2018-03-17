@@ -3,7 +3,7 @@ import * as actions from '../actions/index';
 import { api } from '../../services/index';
 
 export function* loadParameters() {
-    try {
+    /*try {
         const res = yield call(api.getParameters);
         function addLeadingZero(num){
             return (num <= 9)? ("0"+num) : num;
@@ -16,9 +16,9 @@ export function* loadParameters() {
     }
     catch(e) {
         yield put(actions.getParametersFailed());
-    }
+    }*/
 
-    /*try {
+    try {
         let NumberOfPeople = yield call(api.getNumberOfPeople);
         let Temperature = yield call(api.getTemperature);
         let Oxygen = yield call(api.getOxygen);
@@ -30,9 +30,16 @@ export function* loadParameters() {
         console.log(Oxygen.v[Oxygen.v.length-1].m[0].toFixed(2))
         console.log((Pressure.v[Pressure.v.length-1].m[0]/1000).toFixed(2))
         console.log(Humidity.v[Humidity.v.length-1].m[0].toFixed(2))
-        console.log(Illuminance.v[Illuminance.v.length-1].m[0].toFixed(2))
+        console.log(Illuminance.v[Illuminance.v.length-1].m[0].toFixed(2))*/
+        function addLeadingZero(num){
+            return (num <= 9)? ("0"+num) : num;
+        }
+        var currDate = new Date(),
+        label = addLeadingZero(currDate.getHours()) + ":" +
+            addLeadingZero(currDate.getMinutes()) // + ":" + addLeadingZero(currDate.getSeconds());
+
         yield put(actions.getParametersSuccess({
-            time: "11.45",
+            time: label,
             numberOfPeople: Math.floor(NumberOfPeople.v[NumberOfPeople.v.length-1].m[0]),
             temperature: Math.round(Temperature.v[Temperature.v.length-1].m[0] * 100) / 100 ,
             oxygen: Math.round(Oxygen.v[Oxygen.v.length-1].m[0] * 100) / 100,
@@ -43,7 +50,7 @@ export function* loadParameters() {
     }
     catch(e) {
         yield put(actions.getParametersFailed());
-    }*/
+    }
 
 }
 
