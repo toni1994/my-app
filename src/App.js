@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import style from './index.scss';
+//import style from './index.scss';
 import SynChart from './synChart.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {getParameteres, changeDataInterval, reset, start_stop} from "./redux/actions/index.js";
+import {getParameteres, changeDataInterval, reset, start_stop, getPeople} from "./redux/actions/index.js";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ButtonInterval from './buttonInterval';
 import ButtonStart from './buttonStart';
@@ -17,11 +17,13 @@ const imgPressure = require('./images/pressure.png');
 const imgPeople = require('./images/people.png');
 
 var globalTimer = {};
+var globalTimerPeople = {};
 
 class App extends Component {
   constructor(props){
     super(props);
     this.myTimeoutFunction=this.myTimeoutFunction.bind(this);
+    this.getPeopleTimer=this.getPeopleTimer.bind(this); 
     this.changeInterval=this.changeInterval.bind(this);
     this.resetAll=this.resetAll.bind(this);
     this.changeToStart=this.changeToStart.bind(this);
@@ -54,6 +56,12 @@ class App extends Component {
   {
       this.props.actions.getParameteres();
       globalTimer = setTimeout(this.myTimeoutFunction, this.props.dataInterval * 30000);
+  }
+
+  getPeopleTimer()
+  {
+    this.props.actions.getPeople();
+    globalTimerPeople = setTimeout(this.getPeopleTimer, 2000);
   }
   
   getColor(type,value){
@@ -185,6 +193,7 @@ class App extends Component {
   componentWillMount(){
     //this.props.actions.getParameteres();
     //this.myTimeoutFunction();
+    this.getPeopleTimer();
   }
   render() {
     if(this.props.latestMeasurement.oxygen !== undefined){
@@ -195,37 +204,37 @@ class App extends Component {
       complexSettings.data = [5]
     return (
       <MuiThemeProvider>
-      <div className={style.wrapper}>
-        <div className={style.leftContainer}>
-        <div className={style.blockContainer}> 
-          <div className={style.blockItem} >
-            <div className={style.ImgagePartOfBlock}> <img className={style.imgTemperature} src={imgTemperature} alt="imgTemperature"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [TEMPERATURE] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
+      <div className="wrapper">
+        <div className="leftContainer">
+        <div className="blockContainer"> 
+          <div className="blockItem" >
+            <div className="ImgagePartOfBlock"> <img className="imgTemperature" src={imgTemperature} alt="imgTemperature"/> </div>
+            <div className="LeftDescriptionPartOfBlock"> <div className="nameOfParametar">  [TEMPERATURE] {this.props.latestMeasurement.temperature} °C <br/>  {this.getCondition("temperature",this.props.latestMeasurement.temperature)}</div> </div>  
            </div>
           
-          <div className={style.blockItem} >
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [HUMIDITY] <br/> {this.props.latestMeasurement.humidity}  % <br/>  {this.getCondition("humidity",this.props.latestMeasurement.humidity)}  </div> </div>  
-            <div className={style.ImgagePartOfBlock}>  <img className={style.imgHumadity} src={imgHumadity} alt="imgHumadity"/> </div>
+          <div className="blockItem" >
+            <div className="RightDescriptionPartOfBlock"> <div className="nameOfParametar">  [HUMIDITY] <br/> {this.props.latestMeasurement.humidity}  % <br/>  {this.getCondition("humidity",this.props.latestMeasurement.humidity)}  </div> </div>  
+            <div className="ImgagePartOfBlock">  <img className="imgHumadity" src={imgHumadity} alt="imgHumadity"/> </div>
           </div>
 
-          <div className={style.blockItem} >
-            <div className={style.ImgagePartOfBlock}>  <img className={style.imgLightness} src={imgLightness} alt="imgLightness"/> </div>
-            <div className={style.LeftDescriptionPartOfBlock}> <div className={style.nameOfParametar}> [ILLUMINATION] <br/> {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
+          <div className="blockItem" >
+            <div className="ImgagePartOfBlock">  <img className="imgLightness" src={imgLightness} alt="imgLightness"/> </div>
+            <div className="LeftDescriptionPartOfBlock"> <div className="nameOfParametar"> [ILLUMINATION] <br/> {this.props.latestMeasurement.iluminance} Lux  <br/> {this.getCondition("iluminance",this.props.latestMeasurement.iluminance)}  </div> </div>  
           </div>
 
-          <div className={style.blockItem} >
-            <div className={style.RightDescriptionPartOfBlock}> <div className={style.nameOfParametar}>  [PRESSURE] <br/> {this.props.latestMeasurement.pressure} HPa <br/>  {this.getCondition("pressure",this.props.latestMeasurement.pressure)}  </div>  </div>  
-            <div className={style.ImgagePartOfBlock}>  <img className={style.imgPressure} src={imgPressure} alt="imgPressure"/> </div>
+          <div className="blockItem" >
+            <div className="RightDescriptionPartOfBlock"> <div className="nameOfParametar">  [PRESSURE] <br/> {this.props.latestMeasurement.pressure} HPa <br/>  {this.getCondition("pressure",this.props.latestMeasurement.pressure)}  </div>  </div>  
+            <div className="ImgagePartOfBlock">  <img className="imgPressure" src={imgPressure} alt="imgPressure"/> </div>
           </div>
 
-          <div className={style.middleBlock}>  <div className={style.middleBlockInside}> <img className={style.imgPeople} src={imgPeople} alt="imgPeople"/> <p className={style.conferenceRoom}>  People currently <br/> in the room </p> <p  className={style.numberOfPeopleDisplayed}> <b> {this.props.latestMeasurement.numberOfPeople} </b> </p>  </div> </div>
+          <div className="middleBlock">  <div className="middleBlockInside"> <img className="imgPeople" src={imgPeople} alt="imgPeople"/> <p className="conferenceRoom">  People currently <br/> in the room </p> <p  className="numberOfPeopleDisplayed"> <b> {this.props.people} </b> </p>  </div> </div>
           </div> </div>
-          <div className={style.middleContainer}> <AnyChart {...complexSettings}/> </div>
-          <div className={style.rightContainer}>
-          <div className={style.chartContainer}>
-            <div className={style.settingsContainer}>   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
-            <div className={style.roomPressure}>
-          <div className={style.chart}> 
+          <div className="middleContainer"> <AnyChart {...complexSettings}/> </div>
+          <div className="rightContainer">
+          <div className="chartContainer">
+            <div className="settingsContainer">   <ButtonStart reset={this.resetAll} start={this.props.start} changeToStart={this.changeToStart} changeToStop={this.changeToStop} /> <ButtonInterval changeDataInterval={this.changeInterval}/>  </div>
+            <div className="roomPressure">
+          <div className="chart"> 
           <SynChart data={this.props.data} excistData={this.props.data.length > 0 ? true : false} temperatureColor={this.getColor("temperature",this.props.latestMeasurement.temperature)}
           humidityColor={this.getColor("humidity",this.props.latestMeasurement.humidity)} iluminanceColor={this.getColor("iluminance",this.props.latestMeasurement.iluminance)}
           pressureColor= {this.getColor("pressure",this.props.latestMeasurement.pressure)} />
@@ -245,6 +254,7 @@ function mapStateToProps(state){
       dataInterval: state.parameters.dataInterval,
       start: state.parameters.start,
       latestMeasurement: state.parameters.latestMeasurement,
+      people: state.parameters.people
   }
 }
 
@@ -254,7 +264,8 @@ function mapDispatchToProps(dispatch) {
       getParameteres,
       changeDataInterval,
       reset,
-      start_stop
+      start_stop,
+      getPeople
     }, dispatch),
   };
 }

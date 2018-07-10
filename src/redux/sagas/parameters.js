@@ -54,13 +54,16 @@ export function* loadParameters() {
 
 }
 
+
 export function* watchGetParameters() {
     while (true) {
       yield take("GET_PARAMETERS");
       yield call(loadParameters);
     }
   }
-    
+
+
+      
   export default [
     fork(watchGetParameters),
   ];

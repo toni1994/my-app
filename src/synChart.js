@@ -17,7 +17,7 @@ const SynChart = (props) =>
         <Tooltip wrapperStyle={{backgroundColor: '#9F9F9F', color:'white'}}/>
         <Line type='monotone' dataKey='temperature' stroke="blue" dot={false} fill="blue" />
         <Line type='monotone' dataKey='humidity' stroke='white' dot={false}   fill='white' />   
-        <Line type='monotone' dataKey='oxygen' stroke='#BABABA' dot={false} fill='#D5D4D4' />     
+        <Line type='monotone' dataKey='oxygen' stroke='#33ffff' dot={false} fill='#33ffff' />     
         </LineChart>
         <LineChart width={530} height={180} data={props.data} syncId="anyId"
               margin={{top: 10, right: 15, left: 5, bottom: 0}}>

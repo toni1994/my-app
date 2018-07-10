@@ -1,4 +1,4 @@
-const initialState = { dataInterval: 2, start: false , data: [], latestMeasurement: {}}
+const initialState = { dataInterval: 2, start: false , data: [], latestMeasurement: {}, people: null}
 
 export default function reducer(state = initialState , action){
     switch(action.type)
@@ -15,10 +15,13 @@ export default function reducer(state = initialState , action){
         return {...state, dataInterval: action.value}
     
     case "RESET":
-        return {...state, data: [], start: false, latestMeasurement: {}}
+        return {...state, data: [], start: false, latestMeasurement: {}, people: null}
     
     case "START_STOP":
         return {...state, start: action.value}
+         
+    case "GET_PEOPLE_SUCCESS":
+         return {...state, people: action.value}
         
     default:
         return state;

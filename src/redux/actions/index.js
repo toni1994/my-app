@@ -25,3 +25,21 @@ export const start_stop = (value) => ({
   value
 })
 
+export const getPeople = () => ({
+  type: 'GET_PEOPLE',
+})
+
+export const getPeopleSuccess = (value) => ({
+  type: 'GET_PEOPLE_SUCCESS',
+  value
+})
+
+export const getPeopleFailed = (value) => ({
+  type: 'GET_PEOPLE_FAILED',
+  value
+})
+
+
+
+
+
